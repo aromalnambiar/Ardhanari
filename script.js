@@ -2,9 +2,35 @@ $(document).ready(function () {
   var envelope = $("#envelope");
   var btn_open = $("#open");
   var btn_reset = $("#reset");
-  var musicBtn = $("#play-music");
   var music = document.getElementById("bg-music");
   var isPlaying = false;
+
+  // Loading Screen Logic
+  setTimeout(() => {
+    $("#loading-text").text("For My Dearest Pappu...");
+    $("#start-btn").fadeIn().removeClass("hidden");
+    $(".loading-sticker").css("animation", "none"); // Stop bouncing for a calmer feel
+  }, 2000); // Simulate 2s loading
+
+  $("#start-btn").click(function() {
+    // 1. Play Music (User interaction allows this)
+    music.play().then(() => {
+        console.log("Music started");
+    }).catch(e => console.log("Music failed:", e));
+
+    // 2. Hide Loading Screen
+    $("#loading-screen").fadeOut(500, function() {
+        $(this).remove(); // Remove from DOM
+        
+        // 3. Open Envelope automatically after screen is gone
+        setTimeout(() => {
+            open();
+        }, 500);
+    });
+  });
+
+  // Removed auto-play attempts since valid interaction is now enforced via start button
+
 
   envelope.click(function () {
     open();
@@ -24,6 +50,7 @@ $(document).ready(function () {
         $("#full-letter").addClass("visible");
     }, 1500);
   }
+
   function close() {
     envelope.addClass("close").removeClass("open");
     $("#full-letter").removeClass("visible");
@@ -31,18 +58,6 @@ $(document).ready(function () {
 
   $(".letter-close").click(function(e) {
       $("#full-letter").removeClass("visible");
-  });
-
-  musicBtn.click(function() {
-    if (isPlaying) {
-      music.pause();
-      musicBtn.text("🎵 Play Music");
-    } else {
-      // Note: User needs to provide a valid audio source or user interaction first for some browsers
-      music.play().catch(e => console.log("Audio play failed (user interaction needed or no src):", e));
-      musicBtn.text("⏸️ Pause Music");
-    }
-    isPlaying = !isPlaying;
   });
 
   function createFloatingHearts() {

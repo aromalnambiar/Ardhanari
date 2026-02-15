@@ -23,29 +23,6 @@ body {
   width: 100vw;
 }
 
-.music-player {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-}
-
-.music-player button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 1.2rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
-}
-
-.music-player button:hover {
-  transform: scale(1.1);
-}
 
 .pg-sticker {
   position: absolute;
@@ -68,6 +45,59 @@ body {
     transform: translateY(-10px);
   }
 }
+
+/* New Floating Stickers */
+.sticker-love,
+.sticker-moon,
+.sticker-bmw,
+.sticker-ardhanari {
+  position: absolute;
+  z-index: 50;
+  pointer-events: none;
+  width: 100px;
+  /* Default size */
+  animation: bounce 3s infinite ease-in-out;
+}
+
+.sticker-love {
+  top: 20px;
+  left: 20px;
+  animation-delay: 0.5s;
+}
+
+.sticker-moon {
+  top: 20px;
+  right: 20px;
+  width: 120px;
+  animation-delay: 1s;
+}
+
+.sticker-bmw {
+  bottom: 20px;
+  right: 20px;
+  width: 130px;
+  animation-delay: 1.5s;
+}
+
+.sticker-ardhanari {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  animation: bounce 4s infinite ease-in-out;
+  /* Note: transform translateX might conflict with bounce translateY if not careful, 
+     but bounce uses translateY so it should combine or we need a wrapper. 
+     Actually, keyframes overwrite transform. I'll need a specific animation or wrapper. 
+     Simpler: Use margin for positioning center, or a specific keyframe. */
+  margin-left: -55px;
+  /* Half of width */
+  left: 50%;
+  transform: none;
+  /* Reset transform for animation availability */
+}
+
+/* Update bounce to include X centering? No, better to use margins for centering Ardhanari 
+   or creating a separate keyframe. Let's use margin placement for Ardhanari to be safe. */
 
 .floating-hearts {
   position: fixed;
@@ -134,6 +164,18 @@ body {
 
   .pg-sticker {
     width: 100px;
+  }
+
+  .sticker-love,
+  .sticker-moon,
+  .sticker-bmw,
+  .sticker-ardhanari {
+    width: 70px !important;
+  }
+
+  .sticker-ardhanari {
+    margin-left: -35px;
+    /* Half of 70px */
   }
 
   .letter {
@@ -484,4 +526,59 @@ body {
 .reset button:hover {
   background-color: var(--primary-color);
   color: #fff;
+}
+
+/* Loading Screen */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-color);
+  z-index: 10000;
+  /* Highest z-index */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: opacity 0.8s ease;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-sticker {
+  width: 150px;
+  animation: bounce 1s infinite alternate;
+  margin-bottom: 20px;
+}
+
+#loading-text {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+}
+
+#start-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: 'Dancing Script', cursive;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+#start-btn:hover {
+  transform: scale(1.1);
+  background-color: #ff1493;
+}
+
+#start-btn.hidden {
+  display: none;
 }
