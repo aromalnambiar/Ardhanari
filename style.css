@@ -1,0 +1,487 @@
+:root {
+  --primary-color: #ff69b4;
+  /* Hot pink */
+  --secondary-color: #ffb7c5;
+  /* Baby pink */
+  --bg-color: #ffe6ea;
+  /* Very light pink */
+  --pocket-color: #ff8da1;
+  --flap-color: #ff69b4;
+}
+
+body {
+  background-color: var(--bg-color);
+  background-image: radial-gradient(#ffb7c5 15%, transparent 16%),
+    radial-gradient(#ffb7c5 15%, transparent 16%);
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;
+  font-family: 'Dancing Script', cursive;
+  overflow: hidden;
+  /* prevent scrollbars from floating elements */
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.music-player {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.music-player button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.music-player button:hover {
+  transform: scale(1.1);
+}
+
+.pg-sticker {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 150px;
+  z-index: 50;
+  pointer-events: none;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.float-heart {
+  position: absolute;
+  color: #ff69b4;
+  font-size: 20px;
+  animation: floatUp 5s linear forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+#envelope {
+  position: relative;
+  width: 420px;
+  height: 270px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin-left: auto;
+  margin-right: auto;
+  top: 50%;
+  /* Adjusted top to fit in view better */
+  background-color: var(--flap-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  #envelope {
+    width: 80vw;
+    height: 50vw;
+  }
+
+  .flap {
+    border-left-width: 40vw !important;
+    border-right-width: 40vw !important;
+    border-top-width: 28vw !important;
+  }
+
+  .pocket {
+    border-left-width: 40vw !important;
+    border-right-width: 40vw !important;
+    border-bottom-width: 25vw !important;
+  }
+
+  .pg-sticker {
+    width: 100px;
+  }
+
+  .letter {
+    width: 85%;
+    height: 85%;
+    top: 7%;
+  }
+
+  .words.line1 {
+    font-size: 0.6rem;
+  }
+
+  .words.line2,
+  .words.line3,
+  .words.line4 {
+    font-size: 0.9rem;
+  }
+}
+
+.front {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 3;
+}
+
+.flap {
+  border-left: 210px solid transparent;
+  border-right: 210px solid transparent;
+  border-bottom: 123px solid transparent;
+  /* a little smaller */
+  border-top: 147px solid var(--flap-color);
+  /* a little larger */
+  transform-origin: top;
+  pointer-events: none;
+}
+
+.pocket {
+  border-left: 210px solid var(--pocket-color);
+  border-right: 210px solid var(--pocket-color);
+  border-bottom: 135px solid var(--primary-color);
+  border-top: 135px solid transparent;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.letter {
+  position: relative;
+  background-color: #fff;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 90%;
+  top: 5%;
+  border-radius: 6px;
+  box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+  font-family: "Dancing Script", cursive;
+}
+
+.letter:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 0.8rem;
+  color: #333;
+  padding: 10px;
+  text-align: left;
+  height: 90%;
+  overflow-y: auto;
+  line-height: 1.2;
+}
+
+/* Custom scrollbar for the letter */
+.text::-webkit-scrollbar {
+  width: 5px;
+}
+
+.text::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.text::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+
+.open .flap {
+  transform: rotateX(180deg);
+  transition: transform 0.4s ease, z-index 0.6s;
+  z-index: 1;
+}
+
+.close .flap {
+  transform: rotateX(0deg);
+  transition: transform 0.4s 0.6s ease, z-index 1s;
+  z-index: 5;
+}
+
+.close .letter {
+  transform: translateY(0px);
+  transition: transform 0.4s ease, z-index 1s;
+  z-index: 1;
+}
+
+.open .letter {
+  transform: translateY(-60px);
+  transition: transform 0.4s 0.6s ease, z-index 0.6s;
+  z-index: 2;
+  /* height: 380px;  Removed large height since it's now a preview */
+  /* top: -60px; Removed top adjustment */
+}
+
+.hearts {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.heart {
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+  pointer-events: none;
+}
+
+.heart:before,
+.heart:after {
+  position: absolute;
+  content: "";
+  left: 50px;
+  top: 0;
+  width: 50px;
+  height: 80px;
+  background: #ff1493;
+  /* Deep pink */
+  border-radius: 50px 50px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+  pointer-events: none;
+}
+
+.heart:after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+.close .heart {
+  opacity: 0;
+  -webkit-animation: none;
+  animation: none;
+}
+
+.a1 {
+  left: 20%;
+  transform: scale(0.6);
+  opacity: 1;
+  -webkit-animation: slideUp 4s linear 1, sideSway 2s ease-in-out 4 alternate;
+  -moz-animation: slideUp 4s linear 1, sideSway 2s ease-in-out 4 alternate;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+.a2 {
+  left: 55%;
+  transform: scale(1);
+  opacity: 1;
+  -webkit-animation: slideUp 5s linear 1, sideSway 4s ease-in-out 2 alternate;
+  -moz-animation: slideUp 5s linear 1, sideSway 4s ease-in-out 2 alternate;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+.a3 {
+  left: 10%;
+  transform: scale(0.8);
+  opacity: 1;
+  -webkit-animation: slideUp 7s linear 1, sideSway 2s ease-in-out 6 alternate;
+  -moz-animation: slideUp 7s linear 1, sideSway 2s ease-in-out 6 alternate;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+@-webkit-keyframes slideUp {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -600px;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -600px;
+  }
+}
+
+@-webkit-keyframes sideSway {
+  0% {
+    margin-left: 0px;
+  }
+
+  100% {
+    margin-left: 50px;
+  }
+}
+
+@keyframes sideSway {
+  0% {
+    margin-left: 0px;
+  }
+
+  100% {
+    margin-left: 50px;
+  }
+}
+
+
+
+/* Full Letter Modal */
+#full-letter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+#full-letter.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#full-letter .paper {
+  background-color: #fff;
+  width: 90%;
+  max-width: 600px;
+  height: 80%;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Dancing Script', cursive;
+  background-image: radial-gradient(#f0f0f0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+#full-letter .text-content {
+  height: 100%;
+  overflow-y: auto;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  padding-right: 10px;
+}
+
+/* Scrollbar for modal text */
+#full-letter .text-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#full-letter .text-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+#full-letter .text-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.letter-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  z-index: 1001;
+  font-family: sans-serif;
+  transition: color 0.2s;
+}
+
+.letter-close:hover {
+  color: var(--primary-color);
+}
+
+.envlope-wrapper {
+  height: 500px;
+}
+
+.reset {
+  text-align: center;
+  position: relative;
+  top: 10%;
+}
+
+.reset button {
+  font-weight: 800;
+  font-style: normal;
+  transition: all 0.1s linear;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: solid 2px var(--primary-color);
+  border-radius: 4px;
+  color: var(--primary-color);
+  display: inline-block;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin: 5px;
+  padding: 10px;
+  line-height: 1em;
+  text-decoration: none;
+  min-width: 120px;
+  cursor: pointer;
+}
+
+.reset button:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
